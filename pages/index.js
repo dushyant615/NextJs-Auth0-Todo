@@ -5,6 +5,7 @@ import { table, minifyRecords} from './api/utils/airtable';
 import {TodosContext} from '../contexts/TodosContext';
 import {useContext, useEffect} from 'react';
 import auth0 from './api/utils/auth0';
+import TodoForm from '../components/TodoForm';
 export default function Home({ initialTodos, user}) {
   const {todos, setTodos} = useContext(TodosContext);
   useEffect(()=>{
@@ -18,24 +19,33 @@ export default function Home({ initialTodos, user}) {
       </Head>
       <Navbar user={user}/>
       <main>
-        <h1>ToDo</h1>
-        <ul>
-          {todos &&
-            todos.map((todo) => (
-              <Todo key={todo.id} todo={todo}/>
-            ))
-          }
-        </ul>
+        {user && (
+          <>
+            <h1 className="text-2xl text-center mb-4">My Todo</h1>
+            <TodoForm/>
+            <ul>
+              {todos &&
+                todos.map((todo) => (
+                  <Todo key={todo.id} todo={todo}/>
+                ))
+              }
+            </ul>
+          </>
+        )}
       </main>
-        
     </div>
   )
 }
 
 export async function getServerSideProps(context){
   const session = await auth0.getSession(context.req);
+  let todos = [];
   try{
-    const todos = await table.select({}).firstPage();
+    if(session?.user){
+      todos = await table.select({
+        filterByFormula: `userId = '${session.user.sub}'`
+      }).firstPage();
+    }
     return{
       props: {
         initialTodos: minifyRecords(todos),
