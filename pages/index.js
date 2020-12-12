@@ -14,14 +14,14 @@ export default function Home({ initialTodos, user}) {
   return (
     <div>
       <Head>
-        <title>Authenticated TODO App</title>
+        <title>Authenticated Checklist App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar user={user}/>
       <main>
         {user && (
           <>
-            <h1 className="text-2xl text-center mb-4">My Todo</h1>
+            <h1 className="text-2xl text-center mb-4">My Checklist</h1>
             <TodoForm/>
             <ul>
               {todos &&

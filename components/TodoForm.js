@@ -12,7 +12,7 @@ export default function TodoForm() {
     return (
         <form className="form my-6" onSubmit={handleSubmit}>
             <div className="flex flex-col text-sm mb-2">
-                <label className="font-bold mb-2 text-gray-800" htmlFor="todo">Todo</label>
+                <label className="font-bold mb-2 text-gray-800" htmlFor="todo">Add a Checklist Item</label>
                 <input 
                     type="text" 
                     name="todo" 
@@ -24,8 +24,9 @@ export default function TodoForm() {
                 />
             </div>
             <button 
-                type="submit" 
-                className="w-full rounded bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 focus:outline-none">Submit</button>
+                type="submit"
+                disabled={!todo.trim()} 
+                className={`w-full rounded text-white py-2 px-4 focus:outline-none ${!todo.trim() ? 'bg-gray-500 hover: cursor-not-allowed':'bg-blue-500 hover:bg-blue-600'}`}>Submit</button>
         </form>
     )
 }
