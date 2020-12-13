@@ -32,7 +32,7 @@ export default function Home({ initialTodos, user}) {
             </ul>
           </>
         )}
-        {!user && <p>You should log in to save TODOs</p>}
+        {!user && <p>You must log in to access your checklist</p>}
       </main>
     </div>
   )
